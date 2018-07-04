@@ -17,7 +17,7 @@ from math import *
 from time import *
 from random import *
 
-import winsound
+import simpleaudio as sa
 from Levels import levels
 
 root = Tk()
@@ -671,7 +671,6 @@ def mouseMoveHandler(event):
 
     xMouse = event.x
     yMouse = event.y
-    drawPlayer() 
 
 #################
 ## KEY HANDLER ##
@@ -805,7 +804,7 @@ def drawBullets():
 #Plays Levels
 def playLevels():
     global levels, currentLevel, previousLevel, frame, currentLives, maxLives, levelSelectCheck, gameRunning
-    
+
     if levels[currentLevel].get(frame, False):
         for action in levels[currentLevel].get(frame):
             if action[0] == "Circle":
@@ -883,6 +882,9 @@ def drawBeatLevel():
     menu1.place(x = 97, y = 600)
     menu2.place(x = 75, y = 700)
     
+def playSound(waveFile):
+    wave_obj = sa.WaveObject.from_wave_file(waveFile)
+    wave_obj.play()
 
 #Draws game over screen
 def drawGameOver():
@@ -890,7 +892,7 @@ def drawGameOver():
 
     gameOverCheck = True
 
-    winsound.PlaySound('test4.wav', winsound.SND_ASYNC | winsound.SND_LOOP)
+    playSound('./test4.wav')
     
     screen.delete(currentPic)
 
@@ -961,7 +963,7 @@ def startMenu():
 
     levelSelectCheck = False
 
-    winsound.PlaySound('test3.wav', winsound.SND_ASYNC | winsound.SND_LOOP)
+    playSound('./test3.wav')
     
     play = Button(screen, text = "Story mode", font = ("Lucida Console", 20), command = startProgram)
     info = Button(screen, text = "Help", font = ("Lucida Console", 20), command = startHelpMain)
@@ -1123,7 +1125,7 @@ def ending():
 
     drawBackground()
 
-    winsound.PlaySound('test3.wav', winsound.SND_ASYNC | winsound.SND_LOOP)
+    playSound('./test3.wav')
 
     xEarth = 250
     yEarth = -100
@@ -1191,9 +1193,9 @@ def startProgram():
         levelSelectCheck = True
 
     if levelSelectCheck == True:
-        winsound.PlaySound('test.wav', winsound.SND_ASYNC | winsound.SND_LOOP)
+        playSound('./test.wav')
     else:
-        winsound.PlaySound('test2.wav', winsound.SND_ASYNC | winsound.SND_LOOP)
+        playSound('./test2.wav')
 
         currentLevel = 0
 
